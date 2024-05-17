@@ -13,11 +13,11 @@ activityCompose = "1.9.0"
 composeBom = "2024.05.00"
 
 #jetpack
-androidxLifecycle = "2.7.0"
-androidxLiveDataKtx = "2.7.0"
+androidxLifecycle = "2.8.0"
+androidxLiveDataKtx = "2.8.0"
 androidxNavigationFragmentKtx = "2.7.7"
 androidxNavigationUiKtx = "2.7.7"
-androidxPagingRuntime = "3.2.1"
+androidxPagingRuntime = "3.3.0"
 androidxPreference = "1.2.1"
 datastore = "1.1.1"
 
@@ -32,9 +32,15 @@ hilt = "2.50"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
 
+#room
+room = "2.6.1"
+
 #others
 json = "20190722"
 gson = "2.10.1"
+coil = "2.6.0"
+extendedIcon = "1.6.7"
+devtoolsKsp = "1.9.23-1.0.19"
 
 [libraries]
 
@@ -83,15 +89,24 @@ androidx-recyclerview-selection = { group = "androidx.recyclerview", name = "rec
 #hilt
 dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+dagger-hilt-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt"}
 
 #squareup
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+
+#room
+room-ktx = {group = "androidx.room", name = "room-ktx", version.ref = "room"}
+room-compiler = {group = "androidx.room", name = "room-compiler", version.ref = "room"}
+room-paging = {group = "androidx.room", name = "room-paging", version.ref = "room"}
 
 #others
 json = { group = "org.json", name = "json", version.ref = "json" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+extendedIcon = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "extendedIcon" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -100,6 +115,7 @@ jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "k
 #jetbrainsKotlinExtensions = { id = "org.jetbrains.kotlin.android.extensions", version.ref = "kotlin" }
 jetbrainsKotlinKapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 #jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "devtoolsKsp"}
 
 #hilt
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
