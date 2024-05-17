@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.jetbrainsKotlinKapt)
     alias(libs.plugins.hilt)
-    alias(libs.plugins.devtools.ksp)
+//    alias(libs.plugins.ksp)
 }
 
 android {
@@ -37,6 +37,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {
@@ -94,7 +95,7 @@ dependencies {
     //hilt
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)
-    kapt(libs.dagger.hilt.compose)
+//    kapt(libs.dagger.hilt.compose)
 
     //square_up
     implementation(libs.retrofit)
@@ -105,11 +106,13 @@ dependencies {
     // room
     implementation(libs.room.ktx)
     implementation(libs.room.paging)
-    ksp(libs.room.compiler)
+    kapt(libs.room.compiler)
 
     //others
+//    implementation(libs.ksp.gradlePlugin)
     implementation(libs.gson)
     implementation(libs.json)
     implementation(libs.coil)
     implementation(libs.extendedIcon)
+    implementation(libs.timber)
 }

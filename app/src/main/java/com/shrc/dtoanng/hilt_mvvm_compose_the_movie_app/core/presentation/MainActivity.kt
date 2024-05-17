@@ -1,4 +1,4 @@
-package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app
+package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.core.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

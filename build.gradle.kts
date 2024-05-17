@@ -4,5 +4,4 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
     alias(libs.plugins.jetbrainsKotlinKapt) apply false
     alias(libs.plugins.hilt) apply false
-    alias(libs.plugins.devtools.ksp) apply false
 }

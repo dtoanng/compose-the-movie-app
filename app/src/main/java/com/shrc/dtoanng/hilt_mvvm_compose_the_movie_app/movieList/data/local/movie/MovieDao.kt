@@ -9,8 +9,8 @@ interface MovieDao {
     @Upsert
     suspend fun upsertMovieList(movies: List<MovieEntity>)
 
-    @Query("SELECT * FROM MovieEntity WHERE movieId = :movieId")
-    suspend fun getMovieByMovieId(movieId: Int): MovieEntity?
-    @Query("SELECT * FROM MovieEntity WHERE movieCategory = :category")
+    @Query("SELECT * FROM MovieEntity WHERE id = :id")
+    suspend fun getMovieByMovieId(id: Int): MovieEntity?
+    @Query("SELECT * FROM MovieEntity WHERE category = :category")
     suspend fun getMovieListByMovieCategory(category: String): List<MovieEntity>
 }
