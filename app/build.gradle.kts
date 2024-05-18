@@ -95,7 +95,8 @@ dependencies {
     //hilt
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)
-//    kapt(libs.dagger.hilt.compose)
+    kapt(libs.androidx.hilt.compilier)
+    implementation(libs.androidx.hilt.compose)
 
     //square_up
     implementation(libs.retrofit)

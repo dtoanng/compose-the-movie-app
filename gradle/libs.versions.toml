@@ -26,7 +26,8 @@ androidxRecyclerview = "1.3.2"
 androidxRecyclerviewSelection = "1.1.0"
 
 #hilt
-hilt = "2.50"
+hilt = "2.48"
+androidxHilt = "1.1.0"
 
 #squareup
 okhttp = "4.12.0"
@@ -90,7 +91,8 @@ androidx-recyclerview-selection = { group = "androidx.recyclerview", name = "rec
 #hilt
 dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
-dagger-hilt-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt"}
+androidx-hilt-compilier = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "androidxHilt"}
+androidx-hilt-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHilt"}
 
 #squareup
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
