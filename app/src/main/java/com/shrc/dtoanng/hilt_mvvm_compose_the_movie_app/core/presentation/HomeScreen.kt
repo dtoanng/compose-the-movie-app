@@ -34,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.R
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.presentation.MovieListUiEvent
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.presentation.MovieListViewModel
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.presentation.home.PopularMoviesScreen
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.util.Screen
 
 
@@ -77,7 +78,11 @@ fun HomeScreen(navController: NavHostController) {
                 startDestination = Screen.PopularMovieList.rout
             ) {
                 composable(Screen.PopularMovieList.rout) {
-//                    PopularMovieScreen()
+                    PopularMoviesScreen(
+                        navController = navController,
+                        movieListState = movieState,
+                        onEvent = movieListViewModel::onEvent
+                    )
                 }
                 composable(Screen.UpcomingMovieList.rout) {
 //                    UpcomingMovieScreen()
