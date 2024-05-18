@@ -71,6 +71,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //compose navigation
+    implementation(libs.androidx.navigation.compose)
+
     //lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
@@ -108,6 +111,9 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.room.paging)
     kapt(libs.room.compiler)
+
+    // systemuicontroller
+    implementation(libs.accompanist.systemuicontroller)
 
     //others
 //    implementation(libs.ksp.gradlePlugin)

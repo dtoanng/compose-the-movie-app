@@ -12,6 +12,9 @@ espressoCore = "3.5.1"
 activityCompose = "1.9.0"
 composeBom = "2024.05.00"
 
+#compose navigation
+composeNavigation = "2.7.5"
+
 #jetpack
 androidxLifecycle = "2.8.0"
 androidxLiveDataKtx = "2.8.0"
@@ -35,6 +38,9 @@ retrofit = "2.11.0"
 
 #room
 room = "2.6.1"
+
+##system ui controller
+systemuicontroller = "0.27.0"
 
 #others
 json = "20190722"
@@ -60,6 +66,9 @@ androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+
+#compose navigation
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
 
 #test
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -91,8 +100,8 @@ androidx-recyclerview-selection = { group = "androidx.recyclerview", name = "rec
 #hilt
 dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
-androidx-hilt-compilier = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "androidxHilt"}
-androidx-hilt-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHilt"}
+androidx-hilt-compilier = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "androidxHilt" }
+androidx-hilt-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHilt" }
 
 #squareup
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
@@ -101,9 +110,12 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 
 #room
-room-ktx = {group = "androidx.room", name = "room-ktx", version.ref = "room"}
-room-compiler = {group = "androidx.room", name = "room-compiler", version.ref = "room"}
-room-paging = {group = "androidx.room", name = "room-paging", version.ref = "room"}
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
+
+#system ui controller
+accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "systemuicontroller"}
 
 #others
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
@@ -111,7 +123,7 @@ json = { group = "org.json", name = "json", version.ref = "json" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 extendedIcon = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "extendedIcon" }
-timber = {group = "com.jakewharton.timber", name = "timber", version.ref = "timber"}
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
