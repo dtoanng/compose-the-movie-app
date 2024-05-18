@@ -1,4 +1,8 @@
 package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.core.presentation
 
-class HomeScreen {
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+@Composable
+fun HomeScreen(navController: NavHostController) {
+
 }
