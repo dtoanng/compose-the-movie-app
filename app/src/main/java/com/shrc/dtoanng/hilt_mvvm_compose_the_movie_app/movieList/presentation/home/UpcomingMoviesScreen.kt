@@ -19,16 +19,15 @@ import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.presentation.c
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.util.Category
 
 @Composable
-fun PopularMoviesScreen(
+fun UpcomingMoviesScreen(
     movieListState: MovieListState,
-    navController: NavHostController,
+    navHostController: NavHostController,
     onEvent: (MovieListUiEvent) -> Unit
 ) {
-
-    if (movieListState.popularMovieList.isEmpty()) {
+    if (movieListState.upcomingMovieList.isEmpty()) {
         Box(
             modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()
         }
@@ -36,21 +35,21 @@ fun PopularMoviesScreen(
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(vertical = 8.dp, horizontal = 4.dp)
+            contentPadding = PaddingValues(vertical = 6.dp, horizontal = 4.dp)
         ) {
-            items(movieListState.popularMovieList.size) { index ->
-                MovieItem(
-                    movie = movieListState.popularMovieList[index],
-                    navHostController = navController
-                )
 
+            items(movieListState.upcomingMovieList.size) { index ->
+                MovieItem(
+                    movie = movieListState.upcomingMovieList[index],
+                    navHostController = navHostController
+                )
                 Spacer(modifier = Modifier.height(16.dp))
 
-                if (index >= movieListState.popularMovieList.size - 1 && !movieListState.isLoading) {
-                    onEvent(MovieListUiEvent.Paginate(Category.POPULAR))
+                if (index >= movieListState.upcomingMovieList.size - 1 && !movieListState.isLoading) {
+                    onEvent(MovieListUiEvent.Paginate(Category.UPCOMING))
                 }
             }
+
         }
     }
-
 }

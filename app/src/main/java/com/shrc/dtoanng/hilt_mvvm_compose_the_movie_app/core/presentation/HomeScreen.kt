@@ -35,8 +35,8 @@ import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.R
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.presentation.MovieListUiEvent
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.presentation.MovieListViewModel
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.presentation.home.PopularMoviesScreen
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.presentation.home.UpcomingMoviesScreen
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.util.Screen
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,13 +85,16 @@ fun HomeScreen(navController: NavHostController) {
                     )
                 }
                 composable(Screen.UpcomingMovieList.rout) {
-//                    UpcomingMovieScreen()
+                    UpcomingMoviesScreen(
+                        movieListState = movieState,
+                        navHostController = navController,
+                        onEvent = movieListViewModel::onEvent
+                    )
                 }
             }
         }
     }
 }
-
 
 @Composable
 fun BottomNavigationBar(
@@ -152,7 +155,6 @@ fun BottomNavigationBar(
             }
         }
     }
-
 }
 
 data class BottomItem(val title: String, val icon: ImageVector)
