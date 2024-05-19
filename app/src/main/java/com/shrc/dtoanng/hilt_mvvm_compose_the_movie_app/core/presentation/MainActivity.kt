@@ -16,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.details.presentation.components.MovieDetailsScreen
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.util.Screen
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.theme.HiltmvvmcomposethemovieappTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +50,7 @@ class MainActivity : ComponentActivity() {
                                 },
                             ),
                         ) {
-
+                            MovieDetailsScreen()
                         }
                     }
                 }
