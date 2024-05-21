@@ -33,6 +33,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.R
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.navigation.Screen
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.nowplaying.NowPlayingMoviesScreen
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.popular.PopularMoviesScreen
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.upcoming.UpcomingMoviesScreen
 
@@ -79,6 +80,11 @@ fun HomeScreen(navController: NavHostController) {
                         navController = navController
                     )
                 }
+                composable(Screen.NowPlayingMovieList.rout) {
+                    NowPlayingMoviesScreen(
+                        navController = navController
+                    )
+                }
                 composable(Screen.UpcomingMovieList.rout) {
                     UpcomingMoviesScreen(
                         navHostController = navController
@@ -120,7 +126,7 @@ fun BottomNavigationBar(
                                 //onEvent(MovieListUiEvent.Navigate)
                                 bottomNavController.apply {
                                     popBackStack()
-                                    navigate(Screen.PopularMovieList.rout)
+                                    navigate(Screen.NowPlayingMovieList.rout)
                                 }
                             }
 
