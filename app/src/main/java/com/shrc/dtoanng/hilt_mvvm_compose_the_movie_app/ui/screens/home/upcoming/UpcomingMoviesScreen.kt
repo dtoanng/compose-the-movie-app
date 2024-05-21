@@ -1,4 +1,4 @@
-package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home
+package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.upcoming
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,24 +9,26 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.navigation.Category
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.utils.Category
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.components.MovieItem
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.base.BaseMovieListUiEvent
 
 @Composable
-fun PopularMoviesScreen(
-    movieListState: MovieListState,
-    navController: NavHostController,
-    onEvent: (MovieListUiEvent) -> Unit
-) {
+fun UpcomingMoviesScreen(navHostController: NavHostController) {
 
-    if (movieListState.popularMovieList.isEmpty()) {
+    val upComingViewModel = hiltViewModel<UpcomingMoviesViewModel>()
+    val movieListState = upComingViewModel.movieListState.collectAsState().value
+
+    if (movieListState.movieList.isEmpty()) {
         Box(
             modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()
         }
@@ -34,21 +36,22 @@ fun PopularMoviesScreen(
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(vertical = 8.dp, horizontal = 4.dp)
+            contentPadding = PaddingValues(vertical = 6.dp, horizontal = 4.dp)
         ) {
-            items(movieListState.popularMovieList.size) { index ->
+
+            items(movieListState.movieList.size) { index ->
                 MovieItem(
-                    movie = movieListState.popularMovieList[index],
-                    navHostController = navController
+                    movie = movieListState.movieList[index],
+                    navHostController = navHostController
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                if (index >= movieListState.popularMovieList.size - 1 && !movieListState.isLoading) {
-                    onEvent(MovieListUiEvent.Paginate(Category.POPULAR))
+                if (index >= movieListState.movieList.size - 1 && !movieListState.isLoading) {
+                    upComingViewModel.onEvent(BaseMovieListUiEvent.Paginate(Category.UPCOMING))
                 }
             }
+
         }
     }
-
 }

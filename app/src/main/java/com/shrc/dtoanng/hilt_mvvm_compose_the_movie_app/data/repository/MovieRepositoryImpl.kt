@@ -5,7 +5,7 @@ import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.mapper.toMovie
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.mapper.toMovieEntity
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.MovieAPI
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.model.Movie
-import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.repository.MovieListRepository
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.repository.MovieRepository
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -13,16 +13,11 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class MovieListRepositoryImpl @Inject constructor(
+class MovieRepositoryImpl @Inject constructor(
     private val movieApi: MovieAPI,
     private val movieDatabase: MovieDatabase
-) :
-    MovieListRepository {
-    override suspend fun getMovieList(
-        forceFetchFromRemote: Boolean,
-        category: String,
-        page: Int
-    ): Flow<Resource<List<Movie>>> {
+) : MovieRepository {
+    override suspend fun getMovieList(forceFetchFromRemote: Boolean, category: String, page: Int): Flow<Resource<List<Movie>>> {
         return flow {
             emit(Resource.Loading(true))
 
@@ -39,7 +34,7 @@ class MovieListRepositoryImpl @Inject constructor(
             }
 
             val movieListFromApi = try {
-                movieApi.getMovieList(category, page)
+                movieApi.getMovieList(category = category, page = page, genreId = null)
             } catch (exception: IOException) {
                 emit(Resource.Error(exception.message ?: "Error while loading data..."))
                 return@flow
@@ -75,6 +70,16 @@ class MovieListRepositoryImpl @Inject constructor(
             }
 
             emit(Resource.Error("Movie not found..."))
+            emit(Resource.Loading(false))
+        }
+    }
+
+    override suspend fun getRecommendedMovie(forceFetchFromRemote: Boolean, movieId: Int, page: Int): Flow<Resource<List<Movie>>> {
+        return flow {
+            emit(Resource.Loading(true))
+
+            //todo: impl here
+
             emit(Resource.Loading(false))
         }
     }

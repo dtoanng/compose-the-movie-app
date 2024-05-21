@@ -8,4 +8,6 @@
     <string name="release_date">Release date</string>
     <string name="language">Language</string>
     <string name="overview">Overview</string>
+    <string name="home">Home</string>
+    <string name="top_rated">Top Rated</string>
 </resources>
