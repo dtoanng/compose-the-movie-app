@@ -2,8 +2,8 @@ package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.di
 
 import android.app.Application
 import androidx.room.Room
-import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.data.local.movie.MovieDatabase
-import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.movieList.data.remote.MovieAPI
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.local.movie.MovieDatabase
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.MovieAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

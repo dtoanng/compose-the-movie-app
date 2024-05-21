@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">hilt-mvvm-compose-the-movie-app</string>
+    <string name="app_name">The Movie Compose</string>
     <string name="popular">Popular</string>
     <string name="upcoming">Upcoming</string>
     <string name="popular_movies">Popular Movies</string>
