@@ -6,10 +6,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Movie
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.Upcoming
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -34,7 +33,7 @@ import androidx.navigation.compose.rememberNavController
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.R
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.navigation.Screen
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.nowplaying.NowPlayingMoviesScreen
-import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.popular.PopularMoviesScreen
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.programs.ProgramsScreen
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.upcoming.UpcomingMoviesScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,7 +49,7 @@ fun HomeScreen(navController: NavHostController) {
             TopAppBar(
                 title = {
                     Text(
-                        text = "The MovieCompose",
+                        text = "",
                         fontSize = MaterialTheme.typography.titleLarge.fontSize,
                     )
                 },
@@ -73,12 +72,10 @@ fun HomeScreen(navController: NavHostController) {
         ) {
             NavHost(
                 navController = bottomNavController,
-                startDestination = Screen.PopularMovieList.rout
+                startDestination = Screen.Programs.rout
             ) {
-                composable(Screen.PopularMovieList.rout) {
-                    PopularMoviesScreen(
-                        navController = navController
-                    )
+                composable(Screen.Programs.rout) {
+                    ProgramsScreen(navController = navController)
                 }
                 composable(Screen.NowPlayingMovieList.rout) {
                     NowPlayingMoviesScreen(
@@ -103,9 +100,8 @@ fun BottomNavigationBar(
 
     val items = listOf(
         BottomItem(title = stringResource(R.string.home), icon = Icons.Rounded.Home),
-        BottomItem(title = stringResource(R.string.popular), icon = Icons.Rounded.Movie),
-        BottomItem(title = stringResource(R.string.top_rated), icon = Icons.Rounded.Star),
-        BottomItem(title = stringResource(R.string.upcoming), icon = Icons.Rounded.Upcoming),
+        BottomItem(title = stringResource(R.string.search), icon = Icons.Rounded.Search),
+        BottomItem(title = stringResource(R.string.account), icon = Icons.Rounded.AccountCircle),
     )
 
     val selected = rememberSaveable {
@@ -126,7 +122,7 @@ fun BottomNavigationBar(
                                 //onEvent(MovieListUiEvent.Navigate)
                                 bottomNavController.apply {
                                     popBackStack()
-                                    navigate(Screen.NowPlayingMovieList.rout)
+                                    navigate(Screen.Programs.rout)
                                 }
                             }
 
@@ -134,19 +130,11 @@ fun BottomNavigationBar(
                                 //onEvent(MovieListUiEvent.Navigate)
                                 bottomNavController.apply {
                                     popBackStack()
-                                    navigate(Screen.PopularMovieList.rout)
+                                    navigate(Screen.NowPlayingMovieList.rout)
                                 }
                             }
 
                             2 -> {
-                                //onEvent(MovieListUiEvent.Navigate)
-                                bottomNavController.apply {
-                                    popBackStack()
-                                    navigate(Screen.UpcomingMovieList.rout)
-                                }
-                            }
-
-                            3 -> {
                                 //onEvent(MovieListUiEvent.Navigate)
                                 bottomNavController.apply {
                                     popBackStack()

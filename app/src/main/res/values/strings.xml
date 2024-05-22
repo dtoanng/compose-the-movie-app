@@ -10,4 +10,6 @@
     <string name="overview">Overview</string>
     <string name="home">Home</string>
     <string name="top_rated">Top Rated</string>
+    <string name="search">Search</string>
+    <string name="account">Account</string>
 </resources>

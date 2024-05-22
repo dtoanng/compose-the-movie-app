@@ -32,7 +32,7 @@ class NowPlayingMoviesViewModel @Inject constructor(
             movieRepository.getMovieList(
                 forceFetchFromRemote = forceFetchFromRemote,
                 category = Category.NOW_PLAYING,
-                page = _movieListState.value.currentPage
+                page = movieListState.value.currentPage
             ).collectLatest { result ->
                 when (result) {
                     is Resource.Error -> {
