@@ -4,5 +4,5 @@ import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.model.Genre
 
 data class GenresListState(
     val isLoading: Boolean = false,
-    val genresList: List<Genre> = emptyList()
+    val genresList: MutableList<Genre> = mutableListOf()
 )

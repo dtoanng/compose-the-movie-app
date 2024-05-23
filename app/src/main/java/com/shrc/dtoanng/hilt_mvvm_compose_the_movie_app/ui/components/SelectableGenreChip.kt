@@ -33,7 +33,7 @@ fun SelectableGenreChip(
 ) {
 
     val animateChipBackgroundColor by animateColorAsState(
-        targetValue = if (selected) MaterialTheme.colorScheme.inverseOnSurface else MaterialTheme.colorScheme.surfaceTint,
+        targetValue = if (selected) MaterialTheme.colorScheme.inverseOnSurface else Color.DarkGray,
         animationSpec = tween(
             durationMillis = 50,
             delayMillis = 0,

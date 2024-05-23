@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.model.Genre
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.repository.MovieRepository
-import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.base.BaseMovieListState
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.utils.Configuration
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -54,7 +53,7 @@ class ProgramsViewModel @Inject constructor(
                             _genresListState.update {
                                 it.copy(
                                     isLoading = false,
-                                    genresList = genresList
+                                    genresList = genresList.toMutableList()
                                 )
                             }
                         }
@@ -64,6 +63,23 @@ class ProgramsViewModel @Inject constructor(
         }
     }
 
-//    fun getSelectedGenre() = _genresListState.value
+    fun setSelectedGenre(genre: Genre) {
+        _selectedGenre.value = genre
+        viewModelScope.launch {
+            movieRepository.getDiscoverMovie(forceFetchFromRemote = true, genre = genre.id.toString(), 1).collectLatest {
+                result -> when (result) {
+                is Resource.Error -> {
+
+                }
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success -> {
+                    Timber.d("setSelectedGenre/Movie list: ${result.data}")
+                }
+            }
+            }
+        }
+    }
 
 }

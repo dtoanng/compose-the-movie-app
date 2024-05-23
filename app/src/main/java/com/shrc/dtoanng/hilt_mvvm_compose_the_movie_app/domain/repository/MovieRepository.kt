@@ -9,5 +9,6 @@ interface MovieRepository {
     suspend fun getMovie(id: Int): Flow<Resource<Movie>>
     suspend fun getRecommendedMovie(forceFetchFromRemote: Boolean, movieId: Int, page: Int): Flow<Resource<List<Movie>>>
     suspend fun getGenresList(forceFetchFromRemote: Boolean): Flow<Resource<List<Genre>>>
+    suspend fun getDiscoverMovie(forceFetchFromRemote: Boolean, genre: String, page: Int): Flow<Resource<List<Movie>>>
     //suspend fun search()
 }

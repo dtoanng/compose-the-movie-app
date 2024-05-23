@@ -21,6 +21,13 @@ interface MovieAPI {
         @Query("api_key") apiKey: String = API_KEY
     ): GenresListDto
 
+    @GET("discover/movie")
+    suspend fun getDiscoverMovie(
+        @Query("page") page: Int,
+        @Query("with_genres") genreId: String?,
+        @Query("api_key") apiKey: String = API_KEY
+    ): MovieListDto
+
     companion object {
         val BASE_URL = "https://api.themoviedb.org/3/"
         val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w342"

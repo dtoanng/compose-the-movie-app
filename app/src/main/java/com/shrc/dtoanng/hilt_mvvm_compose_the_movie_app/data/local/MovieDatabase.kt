@@ -7,7 +7,7 @@ import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.local.movie.MovieEn
 
 @Database(
     entities = [MovieEntity::class, GenreEntity::class],
-    version = 1
+    version = 2
 )
 abstract class MovieDatabase : RoomDatabase() {
     abstract val dao: MovieDao

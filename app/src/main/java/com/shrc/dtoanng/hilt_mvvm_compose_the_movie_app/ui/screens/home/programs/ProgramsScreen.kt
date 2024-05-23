@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.R
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.model.Genre
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.components.MovieItem
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.components.MovieItemPoster
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.components.SelectableGenreChip
@@ -36,6 +37,7 @@ import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.base.Bas
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.nowplaying.NowPlayingMoviesViewModel
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.popular.PopularMoviesViewModel
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.utils.Category
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.utils.Configuration
 import timber.log.Timber
 
 @Composable
@@ -43,6 +45,7 @@ fun ProgramsScreen(navController: NavHostController) {
 
     val programsViewModel = hiltViewModel<ProgramsViewModel>()
     val genresListState = programsViewModel.genresListState.collectAsState().value
+    val selectedGenre = programsViewModel.selectedGenre.collectAsState().value
 
     LaunchedEffect(key1 = 0) {
         programsViewModel.getGenresList(false)
@@ -54,8 +57,11 @@ fun ProgramsScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         item {
-                Timber.d("Genres 1: ${genresListState.genresList}")
+            Timber.d("Genres 1: ${genresListState.genresList}")
             if (genresListState.genresList.isNotEmpty()) {
+                if (genresListState.genresList.first().name != Configuration.DEFAULT_GENRE_ITEM) {
+                    genresListState.genresList.add(0, Genre(null, Configuration.DEFAULT_GENRE_ITEM))
+                }
                 Timber.d("Genres: ${genresListState.genresList}")
                 LazyRow(
                     modifier = Modifier
@@ -64,10 +70,10 @@ fun ProgramsScreen(navController: NavHostController) {
                 ) {
                     items(genresListState.genresList) { item ->
                         SelectableGenreChip(
-                            selected = false,
+                            selected = item.name === selectedGenre.name,
                             genre = item.name,
                         ) {
-
+                            programsViewModel.setSelectedGenre(item)
                         }
                     }
                 }

@@ -30,7 +30,7 @@ class MovieRepositoryImpl @Inject constructor(
             val shouldLoadLocalMovie = localMovieList.isNotEmpty() && !forceFetchFromRemote
 
             if (shouldLoadLocalMovie) {
-                emit(Resource.Success(localMovieList.map { it.toMovie(category) }))
+                emit(Resource.Success(localMovieList.map { it.toMovie(category = category) }))
 
                 emit(Resource.Loading(false))
 
@@ -69,7 +69,7 @@ class MovieRepositoryImpl @Inject constructor(
 
             if (movieEntity != null) {
                 emit(Resource.Loading(false))
-                emit(Resource.Success(movieEntity.toMovie(movieEntity.category)))
+                emit(Resource.Success(movieEntity.toMovie(category = movieEntity.category)))
                 return@flow
             }
 
@@ -126,6 +126,34 @@ class MovieRepositoryImpl @Inject constructor(
             }
             movieDatabase.dao.upsertGenresList(genreEntities)
             emit(Resource.Loading(false))
+        }
+    }
+
+    override suspend fun getDiscoverMovie(forceFetchFromRemote: Boolean, genre: String, page: Int): Flow<Resource<List<Movie>>> {
+        return flow {
+            emit(Resource.Loading(true))
+
+            val movieListFromApi = try {
+                movieApi.getDiscoverMovie(page, genre)
+            } catch (exception: IOException) {
+                emit(Resource.Error(exception.message ?: "Error while loading data..."))
+                return@flow
+            } catch (exception: HttpException) {
+                emit(Resource.Error(exception.message ?: "Error while loading data..."))
+                return@flow
+            } catch (exception: Exception) {
+                emit(Resource.Error(exception.message ?: "Error while loading data..."))
+                return@flow
+            }
+
+            val movieEntities = movieListFromApi.results.let {
+                it.map { movie ->
+                    movie.toMovie()
+                }
+            }
+            emit(Resource.Success(movieEntities))
+            emit(Resource.Loading(false))
+
         }
     }
 }
