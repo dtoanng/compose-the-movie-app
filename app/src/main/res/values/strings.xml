@@ -12,4 +12,6 @@
     <string name="top_rated">Top Rated</string>
     <string name="search">Search</string>
     <string name="account">Account</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="what_popular">What\'s Popular</string>
 </resources>
