@@ -1,6 +1,7 @@
 package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote
 
-import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.response.MovieListDto
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.response.genre.GenresListDto
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.response.movie.MovieListDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -14,6 +15,11 @@ interface MovieAPI {
         @Query("with_genres") genreId: String?,
         @Query("api_key") apiKey: String = API_KEY
     ): MovieListDto
+
+    @GET("genre/movie/list")
+    suspend fun getGenreList(
+        @Query("api_key") apiKey: String = API_KEY
+    ): GenresListDto
 
     companion object {
         val BASE_URL = "https://api.themoviedb.org/3/"

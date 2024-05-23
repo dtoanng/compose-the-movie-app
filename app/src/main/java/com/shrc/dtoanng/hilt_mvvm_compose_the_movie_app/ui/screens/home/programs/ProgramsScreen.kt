@@ -6,14 +6,18 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,19 +31,49 @@ import androidx.navigation.NavHostController
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.R
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.components.MovieItem
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.components.MovieItemPoster
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.components.SelectableGenreChip
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.base.BaseMovieListUiEvent
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.nowplaying.NowPlayingMoviesViewModel
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.popular.PopularMoviesViewModel
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.utils.Category
+import timber.log.Timber
 
 @Composable
 fun ProgramsScreen(navController: NavHostController) {
+
+    val programsViewModel = hiltViewModel<ProgramsViewModel>()
+    val genresListState = programsViewModel.genresListState.collectAsState().value
+
+    LaunchedEffect(key1 = 0) {
+        programsViewModel.getGenresList(false)
+    }
 
     LazyColumn(
         modifier = Modifier.fillMaxHeight(),
         contentPadding = PaddingValues(horizontal = 4.dp, vertical = 2.dp),
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
+        item {
+                Timber.d("Genres 1: ${genresListState.genresList}")
+            if (genresListState.genresList.isNotEmpty()) {
+                Timber.d("Genres: ${genresListState.genresList}")
+                LazyRow(
+                    modifier = Modifier
+                        .padding(top = 8.dp, bottom = 8.dp, start = 9.dp, end = 9.dp)
+                        .fillMaxWidth()
+                ) {
+                    items(genresListState.genresList) { item ->
+                        SelectableGenreChip(
+                            selected = false,
+                            genre = item.name,
+                        ) {
+
+                        }
+                    }
+                }
+            }
+        }
+
         item {
             NowPlayingMovieRow(navController)
         }

@@ -1,15 +1,19 @@
 package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.repository
 
-import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.local.movie.MovieDatabase
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.local.MovieDatabase
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.local.genre.GenreEntity
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.mapper.toGenre
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.mapper.toMovie
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.mapper.toMovieEntity
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.MovieAPI
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.model.Genre
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.model.Movie
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.repository.MovieRepository
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
+import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
@@ -80,6 +84,47 @@ class MovieRepositoryImpl @Inject constructor(
 
             //todo: impl here
 
+            emit(Resource.Loading(false))
+        }
+    }
+
+    override suspend fun getGenresList(forceFetchFromRemote: Boolean): Flow<Resource<List<Genre>>> {
+        return flow {
+            emit(Resource.Loading(true))
+
+            val localGenresList = movieDatabase.dao.getGenreByGenresList()
+            Timber.d("localGenresList: $localGenresList")
+
+            val shouldLoadLocalGenre = localGenresList.isNotEmpty() && !forceFetchFromRemote
+
+            if (shouldLoadLocalGenre) {
+                emit(Resource.Success(localGenresList.map {
+                    Timber.d("getGenresList with id: ${it.id} - name: ${it.name}")
+                    it.toGenre()
+                }))
+                emit(Resource.Loading(false))
+                return@flow
+            }
+
+            val genresListFromApi = try {
+                movieApi.getGenreList()
+            } catch (exception: IOException) {
+                emit(Resource.Error(exception.message ?: "Error while loading data..."))
+                return@flow
+            } catch (exception: HttpException) {
+                emit(Resource.Error(exception.message ?: "Error while loading data..."))
+                return@flow
+            } catch (exception: Exception) {
+                emit(Resource.Error(exception.message ?: "Error while loading data..."))
+                return@flow
+            }
+
+            val genreEntities = genresListFromApi.genres.let {
+                it.map { dto ->
+                    GenreEntity(dto.id, dto.name)
+                }
+            }
+            movieDatabase.dao.upsertGenresList(genreEntities)
             emit(Resource.Loading(false))
         }
     }

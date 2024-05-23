@@ -1,7 +1,9 @@
 package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.mapper
 
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.local.genre.GenreEntity
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.local.movie.MovieEntity
-import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.response.MovieDto
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.response.movie.MovieDto
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.model.Genre
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.model.Movie
 
 fun MovieDto.toMovieEntity(
@@ -51,3 +53,5 @@ fun MovieEntity.toMovie(
         listOf(-1, -2)
     }
 )
+
+fun GenreEntity.toGenre() = Genre(id = id, name = name)
