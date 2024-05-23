@@ -2,7 +2,7 @@ package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.di
 
 import android.app.Application
 import androidx.room.Room
-import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.local.movie.MovieDatabase
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.local.MovieDatabase
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.MovieAPI
 import dagger.Module
 import dagger.Provides
@@ -32,6 +32,6 @@ object AppModule {
     @Provides
     @Singleton
     fun providesMovieDatabase(app: Application): MovieDatabase {
-        return Room.databaseBuilder(app, MovieDatabase::class.java, "movie_db.db").build()
+        return Room.databaseBuilder(app, MovieDatabase::class.java, "movie_db.db").fallbackToDestructiveMigration().build()
     }
 }

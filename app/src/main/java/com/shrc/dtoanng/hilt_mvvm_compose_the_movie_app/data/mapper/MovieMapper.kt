@@ -1,25 +1,27 @@
 package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.mapper
 
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.local.genre.GenreEntity
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.local.movie.MovieEntity
-import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.response.MovieDto
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.response.movie.MovieDto
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.model.Genre
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.model.Movie
 
 fun MovieDto.toMovieEntity(
     category: String
 ) = MovieEntity(
-    id = id ?: -1,
-    title = title ?: "",
-    posterPath = posterPath ?: "",
-    voteAverage = voteAverage ?: 0.0,
-    releaseDate = releaseDate ?: "",
-    overview = overview ?: "",
-    voteCount = voteCount ?: 0,
+    id = id,
+    title = title,
+    posterPath = posterPath,
+    voteAverage = voteAverage,
+    releaseDate = releaseDate,
+    overview = overview,
+    voteCount = voteCount,
     backdropPath = backdropPath,
-    popularity = popularity ?: 0.0,
+    popularity = popularity,
     originalLanguage = originalLanguage,
     originalTitle = originalTitle,
-    adult = adult ?: false,
-    video = video ?: false,
+    adult = adult,
+    video = video,
     genreIds = try {
         genreIds?.joinToString(",") ?: "-1,-2"
     } catch (e: Exception) {
@@ -51,3 +53,23 @@ fun MovieEntity.toMovie(
         listOf(-1, -2)
     }
 )
+
+fun MovieDto.toMovie() = Movie(
+    id = id,
+    title = title,
+    posterPath = posterPath,
+    voteAverage = voteAverage,
+    releaseDate = releaseDate,
+    overview = overview,
+    voteCount = voteCount,
+    backdropPath = backdropPath,
+    popularity = popularity,
+    originalLanguage = originalLanguage,
+    originalTitle = originalTitle,
+    adult = adult,
+    video = video,
+    genreIds = genreIds,
+    category = ""
+)
+
+fun GenreEntity.toGenre() = Genre(id = id, name = name)

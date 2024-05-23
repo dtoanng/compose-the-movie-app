@@ -1,6 +1,7 @@
 package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote
 
-import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.response.MovieListDto
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.response.genre.GenresListDto
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.response.movie.MovieListDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -10,6 +11,18 @@ interface MovieAPI {
     @GET("movie/{category}")
     suspend fun getMovieList(
         @Path("category") category: String,
+        @Query("page") page: Int,
+        @Query("with_genres") genreId: String?,
+        @Query("api_key") apiKey: String = API_KEY
+    ): MovieListDto
+
+    @GET("genre/movie/list")
+    suspend fun getGenreList(
+        @Query("api_key") apiKey: String = API_KEY
+    ): GenresListDto
+
+    @GET("discover/movie")
+    suspend fun getDiscoverMovie(
         @Query("page") page: Int,
         @Query("with_genres") genreId: String?,
         @Query("api_key") apiKey: String = API_KEY

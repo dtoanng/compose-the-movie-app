@@ -1,4 +1,4 @@
-package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.response
+package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.data.remote.response.movie
 
 import com.google.gson.annotations.SerializedName
 data class MovieListDto(
