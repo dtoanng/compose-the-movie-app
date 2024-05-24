@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.model.Genre
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.domain.repository.MovieRepository
+import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.base.BaseMovieListState
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.utils.Configuration
 import com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +26,9 @@ class ProgramsViewModel @Inject constructor(
 
     private val _selectedGenre = MutableStateFlow(Genre(null, Configuration.DEFAULT_GENRE_ITEM))
     val selectedGenre = _selectedGenre.asStateFlow()
+
+    private val _movieListState = MutableStateFlow(BaseMovieListState())
+    val movieListState = _movieListState.asStateFlow()
 
     fun getGenresList(forceFetchFromRemote: Boolean) {
         viewModelScope.launch {
@@ -66,20 +70,38 @@ class ProgramsViewModel @Inject constructor(
     fun setSelectedGenre(genre: Genre) {
         _selectedGenre.value = genre
         viewModelScope.launch {
+            _movieListState.update {
+                it.copy(isLoading = true)
+            }
+
             movieRepository.getDiscoverMovie(forceFetchFromRemote = true, genre = genre.id.toString(), 1).collectLatest {
                 result -> when (result) {
                 is Resource.Error -> {
-
+                    _movieListState.update {
+                        it.copy(isLoading = false)
+                    }
                 }
                 is Resource.Loading -> {
-
+                    _movieListState.update {
+                        it.copy(isLoading = result.loading)
+                    }
                 }
                 is Resource.Success -> {
                     Timber.d("setSelectedGenre/Movie list: ${result.data}")
+                    result.data?.let { movieList ->
+                        _movieListState.update {
+                            it.copy(
+                                movieList = movieList,
+                                currentPage = movieListState.value.currentPage + 1
+                            )
+                        }
+                    }
                 }
             }
             }
         }
     }
+
+
 
 }

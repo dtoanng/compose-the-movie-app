@@ -1,5 +1,9 @@
 package com.shrc.dtoanng.hilt_mvvm_compose_the_movie_app.ui.screens.home.programs
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,6 +23,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,6 +54,9 @@ fun ProgramsScreen(navController: NavHostController) {
     val programsViewModel = hiltViewModel<ProgramsViewModel>()
     val genresListState = programsViewModel.genresListState.collectAsState().value
     val selectedGenre = programsViewModel.selectedGenre.collectAsState().value
+    var filterVisible by remember {
+        mutableStateOf(false)
+    }
 
     LaunchedEffect(key1 = 0) {
         programsViewModel.getGenresList(false)
@@ -57,7 +68,7 @@ fun ProgramsScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         item {
-            Timber.d("Genres 1: ${genresListState.genresList}")
+            Timber.d("Genres: ${genresListState.genresList}")
             if (genresListState.genresList.isNotEmpty()) {
                 if (genresListState.genresList.first().name != Configuration.DEFAULT_GENRE_ITEM) {
                     genresListState.genresList.add(0, Genre(null, Configuration.DEFAULT_GENRE_ITEM))
@@ -73,11 +84,21 @@ fun ProgramsScreen(navController: NavHostController) {
                             selected = item.name === selectedGenre.name,
                             genre = item.name,
                         ) {
-                            programsViewModel.setSelectedGenre(item)
+
+                            if (item.name == Configuration.DEFAULT_GENRE_ITEM) {
+                                filterVisible = false
+                            } else {
+                                filterVisible = true
+                                programsViewModel.setSelectedGenre(item)
+                            }
                         }
                     }
                 }
             }
+        }
+
+        item {
+            FilterByGenre(selectedGenre, filterVisible, navController)
         }
 
         item {
@@ -86,10 +107,6 @@ fun ProgramsScreen(navController: NavHostController) {
 
         item {
             PopularMovieRow(navController)
-        }
-
-        item {
-            //todo:
         }
 
         item {
@@ -171,6 +188,38 @@ private fun NowPlayingMovieRow(navHostController: NavHostController) {
                 if (index >= movieListState.movieList.size - 1 && !movieListState.isLoading) {
                     nowPlayingMoviesViewModel.onEvent(BaseMovieListUiEvent.Paginate(Category.POPULAR))
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun FilterByGenre(genre: Genre, filterVisible: Boolean, navHostController: NavHostController) {
+    val programsViewModel = hiltViewModel<ProgramsViewModel>()
+    val movieListState = programsViewModel.movieListState.collectAsState().value
+    AnimatedVisibility(
+        visible = filterVisible,
+        enter = fadeIn(animationSpec = tween(2000)),
+        exit = fadeOut(animationSpec = tween(2000))
+    ) {
+        Spacer(modifier = Modifier.padding(vertical = 4.dp))
+        Text(
+            color = Color.White,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            text = if (genre.name == Configuration.DEFAULT_GENRE_ITEM) "" else genre.name,
+            modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp)
+        )
+
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(1),
+            modifier = Modifier.height(350.dp)
+        ) {
+            items(movieListState.movieList.size) { index ->
+                MovieItemPoster(
+                    movie = movieListState.movieList[index],
+                    navHostController = navHostController
+                )
             }
         }
     }
