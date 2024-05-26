@@ -57,6 +57,7 @@ class MovieRepositoryImpl @Inject constructor(
             }
 
             movieDatabase.dao.upsertMovieList(movieEntities)
+            emit(Resource.Success(movieEntities.map { it.toMovie(category = category) }))
             emit(Resource.Loading(false))
         }
     }
@@ -125,6 +126,10 @@ class MovieRepositoryImpl @Inject constructor(
                 }
             }
             movieDatabase.dao.upsertGenresList(genreEntities)
+            emit(Resource.Success(genreEntities.map {
+                Timber.d("getGenresList with id: ${it.id} - name: ${it.name}")
+                it.toGenre()
+            }))
             emit(Resource.Loading(false))
         }
     }

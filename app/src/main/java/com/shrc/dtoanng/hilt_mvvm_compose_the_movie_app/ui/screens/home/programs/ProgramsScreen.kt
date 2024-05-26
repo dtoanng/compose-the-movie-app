@@ -176,7 +176,7 @@ private fun NowPlayingMovieRow(navHostController: NavHostController) {
         )
         LazyHorizontalGrid(
             rows = GridCells.Fixed(2),
-            modifier = Modifier.height(350.dp)
+            modifier = Modifier.height(300.dp)
         ) {
             items(movieListState.movieList.size) { index ->
 
@@ -208,12 +208,12 @@ private fun FilterByGenre(genre: Genre, filterVisible: Boolean, navHostControlle
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             text = if (genre.name == Configuration.DEFAULT_GENRE_ITEM) "" else genre.name,
-            modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp, horizontal = 4.dp)
         )
 
         LazyHorizontalGrid(
             rows = GridCells.Fixed(1),
-            modifier = Modifier.height(350.dp)
+            modifier = Modifier.height(250.dp),
         ) {
             items(movieListState.movieList.size) { index ->
                 MovieItemPoster(
